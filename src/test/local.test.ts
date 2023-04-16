@@ -1,7 +1,8 @@
-import { AuthStorageService } from "../app/core/services/authStorage.service";
+import { AuthStorageService, UserService } from "../app/core/services/authStorage.service";
 
 describe('AuthStorageService', () => {
   let authStorage: AuthStorageService;
+  let userService: UserService
 
   beforeAll(() => {
     // Mock localStorage
@@ -23,6 +24,7 @@ describe('AuthStorageService', () => {
 
   beforeEach(() => {
     authStorage = new AuthStorageService();
+    userService = new UserService(authStorage);
   });
 
   afterEach(() => {
@@ -46,5 +48,20 @@ describe('AuthStorageService', () => {
     localStorage.setItem('token', token);
     authStorage.removeToken();
     expect(authStorage.getToken()).toEqual(null);
+  });
+
+  // test UserService
+
+  it('should call getToken method of AuthStorageService', () => {
+    const getTokenSpy = jest.spyOn(authStorage, 'getToken');
+    userService.getUser();
+    expect(getTokenSpy).toHaveBeenCalled();
+  });
+
+  it('should return the value set by setToken method', () => {
+    const token = 'abc123';
+    localStorage.setItem('token', token);
+    userService.getUser();
+    expect(userService.getUser()).toEqual(token);
   });
 });

@@ -21,3 +21,17 @@ export class AuthStorageService implements AuthStorage {
     localStorage.removeItem(this.ACCESS_TOKEN);
   }
 }
+
+export class UserService {
+  private authStorageService: AuthStorageService;
+
+  constructor(authStorageService: AuthStorageService) {
+    this.authStorageService = authStorageService;
+  }
+
+  getUser() {
+    const token = this.authStorageService.getToken();
+    return token;
+  }
+}
+
