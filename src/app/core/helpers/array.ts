@@ -1,5 +1,5 @@
 export const isAscendingArr = (arr: number[]) => {
-  if (!Array.isArray(arr)) {
+  if (!Array.isArray(arr) || arr.length < 2) {
     return false;
   }
   
