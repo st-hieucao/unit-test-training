@@ -23,15 +23,19 @@ export class AuthStorageService implements AuthStorage {
 }
 
 export class UserService {
-  private authStorageService: AuthStorageService;
+  ACCESS_TOKEN = 'NEW_TOKEN';
 
-  constructor(authStorageService: AuthStorageService) {
-    this.authStorageService = authStorageService;
+  constructor() {
   }
 
-  getUser() {
-    const token = this.authStorageService.getToken();
-    return token;
+  login() {
+    const authService = new AuthStorageService();
+    authService.setToken(this.ACCESS_TOKEN);
+  }
+
+  logout() {
+    const authService = new AuthStorageService();
+    authService.removeToken();
   }
 }
 
